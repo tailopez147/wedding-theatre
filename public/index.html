@@ -1,1 +1,161 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Alex & Sam — Wedding</title>
 
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Inter:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <!-- INTRO / CURTAIN -->
+  <div class="intro" id="intro" aria-hidden="false">
+    <div class="intro__stage">
+      <div class="valance"></div>
+      <div class="curtain curtain--left"></div>
+      <div class="curtain curtain--right"></div>
+
+      <div class="intro__content">
+        <p class="tag">You’re invited</p>
+        <h1 class="title">Alex <span class="amp">&</span> Sam</h1>
+        <p class="subtitle">Saturday • June 14, 2026 • 4:00 PM</p>
+
+        <div class="countdown" aria-label="Countdown to the wedding">
+          <div class="cd"><span id="d">—</span><small>Days</small></div>
+          <div class="cd"><span id="h">—</span><small>Hours</small></div>
+          <div class="cd"><span id="m">—</span><small>Mins</small></div>
+          <div class="cd"><span id="s">—</span><small>Secs</small></div>
+        </div>
+
+        <p class="stats" id="stats" aria-live="polite"></p>
+
+        <div class="intro__actions">
+          <button class="btn btn--primary" id="enterBtn">Enter</button>
+          <button class="btn btn--ghost" id="rsvpBtnIntro">RSVP</button>
+        </div>
+
+        <p class="hint">Tip: scroll like scenes in a show</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- FLOATING RSVP -->
+  <button class="fab" id="rsvpFab" aria-label="Open RSVP">RSVP</button>
+
+  <!-- MAIN SCENES -->
+  <main class="scenes" id="scenes" aria-hidden="true">
+    <section class="scene scene--hero" id="scene-1">
+      <div class="scene__inner">
+        <h2>Showtime</h2>
+        <p class="lead">Join us for an evening of love, laughter, and dancing.</p>
+        <div class="pillRow">
+          <span class="pill">📍 Venue Name</span>
+          <span class="pill">🕓 4:00 PM</span>
+          <span class="pill">🎟️ Reception after</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="scene" id="scene-2">
+      <div class="scene__inner">
+        <h2>The Story</h2>
+        <p>A few lines about how you met, your favorite moment, and what you’re excited for next.</p>
+        <div class="card">
+          <p><strong>Dress code:</strong> Cocktail / Semi-formal</p>
+          <p><strong>Unplugged:</strong> Please enjoy the ceremony phone-free</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="scene" id="scene-3">
+      <div class="scene__inner">
+        <h2>Schedule</h2>
+        <div class="timeline">
+          <div class="tItem"><span>4:00 PM</span><b>Ceremony</b></div>
+          <div class="tItem"><span>5:00 PM</span><b>Cocktail Hour</b></div>
+          <div class="tItem"><span>6:00 PM</span><b>Reception</b></div>
+          <div class="tItem"><span>9:30 PM</span><b>Last Dance</b></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="scene" id="scene-4">
+      <div class="scene__inner">
+        <h2>Venue</h2>
+        <div class="card">
+          <p><strong>Venue Name</strong></p>
+          <p>123 Main Street, City, Country</p>
+          <div class="row">
+            <a class="linkBtn" target="_blank" rel="noreferrer" href="https://maps.google.com/?q=123+Main+Street">Open in Maps</a>
+            <a class="linkBtn" href="#scene-5">Go to RSVP</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="scene scene--rsvp" id="scene-5">
+      <div class="scene__inner">
+        <h2>RSVP</h2>
+        <p class="muted">Please respond by May 1, 2026.</p>
+        <button class="btn btn--primary" id="rsvpBtnScene">Open RSVP</button>
+      </div>
+    </section>
+
+    <footer class="footer">
+      <p>Made with love • © <span id="year"></span></p>
+    </footer>
+  </main>
+
+  <!-- RSVP MODAL -->
+  <div class="modal" id="modal" aria-hidden="true" role="dialog" aria-label="RSVP Form">
+    <div class="modal__backdrop" id="modalBackdrop"></div>
+    <div class="modal__panel" role="document">
+      <div class="modal__bar">
+        <b>RSVP</b>
+        <button class="iconBtn" id="closeModal" aria-label="Close">✕</button>
+      </div>
+
+      <div class="modal__body">
+        <form id="rsvpForm">
+          <label class="hp" aria-hidden="true">
+            Website
+            <input type="text" name="website" tabindex="-1" autocomplete="off" />
+          </label>
+
+          <label>
+            Full name *
+            <input type="text" name="name" required maxlength="120" placeholder="Your name" />
+          </label>
+
+          <label>
+            Attending? *
+            <select name="attending" required>
+              <option value="" selected disabled>Select…</option>
+              <option value="yes">Yes</option>
+              <option value="no">No</option>
+            </select>
+          </label>
+
+          <label>
+            Dietary restrictions (optional)
+            <input type="text" name="dietary" maxlength="200" placeholder="e.g., vegetarian, allergies" />
+          </label>
+
+          <label>
+            Message (optional)
+            <textarea name="message" rows="4" maxlength="500" placeholder="Any note for the couple"></textarea>
+          </label>
+
+          <button class="btn btn--primary" type="submit" id="submitBtn">Submit RSVP</button>
+          <p class="formNote" id="formNote" role="status" aria-live="polite"></p>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
