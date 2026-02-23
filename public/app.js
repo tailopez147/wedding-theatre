@@ -1,7 +1,9 @@
-// Wedding date (Nairobi is UTC+03:00). If you later know the exact time, edit it here.
+// Nairobi is UTC+03:00. Time is a placeholder (no time provided).
 const WEDDING_AT = "2026-05-16T12:00:00+03:00";
 
 const $ = (id) => document.getElementById(id);
+const prefersReducedMotion = () =>
+  window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
 const intro = $("intro");
 const pin = $("pin");
@@ -11,7 +13,7 @@ const flightPath = document.querySelector("#flightPath");
 const flightShine = document.querySelector("#flightShine");
 const plane = document.querySelector("#plane");
 
-const envelopeWrap = $("envelopeWrap");
+const envWrap = $("envWrap");
 
 const page = $("page");
 const topbar = $("topbar");
@@ -29,11 +31,8 @@ const submitBtn = $("submitBtn");
 const formNote = $("formNote");
 
 const yearEl = $("year");
-
-// Countdown elements
 const cdD = $("cdD"), cdH = $("cdH"), cdM = $("cdM"), cdS = $("cdS");
 
-// Helpers
 function pad(n){ return String(n).padStart(2, "0"); }
 
 function tickCountdown(){
@@ -61,103 +60,76 @@ function tickCountdown(){
   cdS.textContent = pad(secs);
 }
 
-function prefersReducedMotion(){
-  return window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-}
-
-// Intro sequence
-async function runIntro(){
-  // show envelope stage gently
-  document.body.classList.add("intro-show");
-
-  if (prefersReducedMotion()){
-    // Skip all animations, go straight to main
-    revealMain();
-    return;
-  }
-
-  // Animate flight trail drawing + plane moving along path
-  await animateFlight();
-
-  // Land in Nairobi (pin pulse)
-  document.body.classList.add("intro-landed");
-  await sleep(650);
-
-  // Envelope auto-open
-  document.body.classList.add("env-open");
-  await sleep(750);
-
-  // Letter rises out
-  document.body.classList.add("letter-out");
-  await sleep(1200);
-
-  revealMain();
-}
+const sleep = (ms) => new Promise(r => setTimeout(r, ms));
 
 function revealMain(){
-  // allow main content
   document.body.classList.add("main-ready");
   page.setAttribute("aria-hidden", "false");
   topbar.setAttribute("aria-hidden", "false");
-
-  // after fade, remove intro from flow
-  setTimeout(() => {
-    intro.style.display = "none";
-  }, 900);
+  setTimeout(() => { intro.style.display = "none"; }, 900);
 }
-
-function sleep(ms){ return new Promise(r => setTimeout(r, ms)); }
 
 function animateFlight(){
   return new Promise((resolve) => {
-    const path = flightPath;
-    const shine = flightShine;
+    const total = flightPath.getTotalLength();
+    flightPath.style.strokeDasharray = String(total);
+    flightPath.style.strokeDashoffset = String(total);
 
-    const total = path.getTotalLength();
-    // trail draw using dash
-    path.style.strokeDasharray = String(total);
-    path.style.strokeDashoffset = String(total);
+    flightShine.style.strokeDasharray = String(total);
+    flightShine.style.strokeDashoffset = String(total);
+    setTimeout(() => { flightShine.style.opacity = "0.55"; }, 1100);
 
-    shine.style.strokeDasharray = String(total);
-    shine.style.strokeDashoffset = String(total);
-
-    // fade in shine a bit late
-    setTimeout(() => { shine.style.opacity = "0.55"; }, 1200);
-
-    const duration = 4200; // ms
+    const duration = 4200;
     const start = performance.now();
 
     function frame(t){
       const p = Math.min(1, (t - start) / duration);
-
-      // easeInOutCubic
       const eased = p < 0.5 ? 4*p*p*p : 1 - Math.pow(-2*p + 2, 3)/2;
 
       const offset = total * (1 - eased);
-      path.style.strokeDashoffset = String(offset);
-      shine.style.strokeDashoffset = String(Math.max(0, offset - total*0.06));
+      flightPath.style.strokeDashoffset = String(offset);
+      flightShine.style.strokeDashoffset = String(Math.max(0, offset - total*0.06));
 
-      // move plane along path
-      const point = path.getPointAtLength(total * eased);
-      const ahead = path.getPointAtLength(Math.min(total, total * eased + 2));
+      const point = flightPath.getPointAtLength(total * eased);
+      const ahead = flightPath.getPointAtLength(Math.min(total, total * eased + 2));
       const angle = Math.atan2(ahead.y - point.y, ahead.x - point.x) * (180/Math.PI);
 
-      plane.setAttribute("transform", `translate(${point.x} ${point.y}) rotate(${angle}) translate(-11 -11)`);
+      plane.setAttribute(
+        "transform",
+        `translate(${point.x} ${point.y}) rotate(${angle}) translate(-11 -11)`
+      );
 
-      if (p < 1){
-        requestAnimationFrame(frame);
-      } else {
-        // ensure final state
-        document.body.classList.add("intro-landed");
-        resolve();
-      }
+      if (p < 1) requestAnimationFrame(frame);
+      else resolve();
     }
 
     requestAnimationFrame(frame);
   });
 }
 
-// RSVP modal
+async function runIntro(){
+  document.body.classList.add("intro-show");
+
+  if (prefersReducedMotion()){
+    revealMain();
+    return;
+  }
+
+  await animateFlight();
+
+  document.body.classList.add("intro-landed");
+  await sleep(650);
+
+  document.body.classList.add("env-open");
+  await sleep(750);
+
+  document.body.classList.add("letter-rise");
+  await sleep(1200);
+
+  revealMain();
+}
+
+/* RSVP modal */
 function openModal(){
   modal.classList.add("show");
   modal.setAttribute("aria-hidden", "false");
@@ -169,7 +141,13 @@ function closeModalFn(){
   document.body.style.overflow = "";
 }
 
-// Form submit to your Worker endpoint
+[rsvpOpenTop, rsvpOpenHero, rsvpOpenDetails].forEach(btn => btn?.addEventListener("click", openModal));
+modalBackdrop.addEventListener("click", closeModalFn);
+closeModal.addEventListener("click", closeModalFn);
+document.addEventListener("keydown", (e) => {
+  if (e.key === "Escape" && modal.classList.contains("show")) closeModalFn();
+});
+
 form.addEventListener("submit", async (e) => {
   e.preventDefault();
   formNote.textContent = "";
@@ -206,7 +184,7 @@ form.addEventListener("submit", async (e) => {
   }
 });
 
-// Reveal animations on scroll
+/* Scroll reveals */
 function setupReveals(){
   const els = document.querySelectorAll(".reveal");
   const io = new IntersectionObserver((entries) => {
@@ -217,25 +195,44 @@ function setupReveals(){
       }
     }
   }, { threshold: 0.12 });
-
   els.forEach(el => io.observe(el));
 }
 
-// Wire buttons
-[rsvpOpenTop, rsvpOpenHero, rsvpOpenDetails].forEach(btn => {
-  btn?.addEventListener("click", openModal);
-});
-modalBackdrop.addEventListener("click", closeModalFn);
-closeModal.addEventListener("click", closeModalFn);
-document.addEventListener("keydown", (e) => {
-  if (e.key === "Escape" && modal.classList.contains("show")) closeModalFn();
-});
+/* Gentle parallax for florals/photo */
+function setupParallax(){
+  const items = [...document.querySelectorAll("[data-parallax]")].map(el => ({
+    el,
+    factor: parseFloat(el.getAttribute("data-parallax")) || 0.15
+  }));
+
+  if (!items.length) return;
+
+  let ticking = false;
+  const update = () => {
+    ticking = false;
+    const y = window.scrollY || 0;
+    for (const it of items){
+      const t = y * it.factor;
+      it.el.style.transform = `translate3d(0, ${t}px, 0) ${it.el.classList.contains("floral-tl") ? "rotate(-8deg)" : ""}${it.el.classList.contains("floral-br") ? " rotate(10deg)" : ""}`;
+    }
+  };
+
+  const onScroll = () => {
+    if (!ticking){
+      ticking = true;
+      requestAnimationFrame(update);
+    }
+  };
+
+  window.addEventListener("scroll", onScroll, { passive: true });
+  update();
+}
 
 skipIntroBtn.addEventListener("click", revealMain);
 
-// Init
 yearEl.textContent = String(new Date().getFullYear());
 tickCountdown();
 setInterval(tickCountdown, 1000);
 setupReveals();
+setupParallax();
 runIntro();
