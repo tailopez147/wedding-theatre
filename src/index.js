@@ -9,8 +9,8 @@ function json(data, init = {}) {
   });
 }
 
-function badRequest(msg) {
-  return json({ ok: false, error: msg }, { status: 400 });
+function bad(msg, status = 400) {
+  return json({ ok: false, error: msg }, { status });
 }
 
 function normName(name) {
@@ -22,10 +22,10 @@ async function handleRSVP(request, env) {
   try {
     body = await request.json();
   } catch {
-    return badRequest("Invalid JSON");
+    return bad("Invalid JSON");
   }
 
-  // Honeypot
+  // Honeypot (basic spam trap)
   if (typeof body?.website === "string" && body.website.trim() !== "") {
     return json({ ok: true });
   }
@@ -33,16 +33,16 @@ async function handleRSVP(request, env) {
   const name = typeof body?.name === "string" ? body.name.trim() : "";
   const attendingRaw = typeof body?.attending === "string" ? body.attending : "";
 
-  if (name.length < 2 || name.length > 120) return badRequest("Name is required");
-
+  if (name.length < 2 || name.length > 120) return bad("Name is required");
   const attending = attendingRaw === "yes" ? 1 : attendingRaw === "no" ? 0 : null;
-  if (attending === null) return badRequest("Attending is required");
+  if (attending === null) return bad("Attending is required");
 
   const dietary = typeof body?.dietary === "string" ? body.dietary.trim().slice(0, 200) : "";
   const message = typeof body?.message === "string" ? body.message.trim().slice(0, 500) : "";
 
   const nameKey = normName(name);
 
+  // D1 prepared statements: prepare().bind().run() :contentReference[oaicite:2]{index=2}
   await env.DB.prepare(`
     INSERT INTO rsvps (name, name_key, attending, dietary, message, updated_at)
     VALUES (?, ?, ?, ?, ?, datetime('now'))
@@ -73,7 +73,9 @@ export default {
   async fetch(request, env) {
     const url = new URL(request.url);
 
+    // API routes
     if (url.pathname === "/api/rsvp") {
+      if (request.method === "OPTIONS") return new Response("", { status: 204 });
       if (request.method !== "POST") return new Response("Method Not Allowed", { status: 405 });
       return handleRSVP(request, env);
     }
@@ -83,7 +85,7 @@ export default {
       return handleStats(env);
     }
 
-    // Serve static site
+    // Static site
     return env.ASSETS.fetch(request);
   },
 };
