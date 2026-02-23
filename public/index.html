@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <meta name="theme-color" content="#F7F2ED" />
-  <title>Jeniffer & Okhifo — Wedding Invitation</title>
+  <title>Jeniffer & Okhifo — Invitation</title>
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -14,23 +14,21 @@
 </head>
 
 <body>
-  <!-- INTRO: World Map + Plane + Envelope Opening -->
+  <!-- INTRO: World-map + plane flyby + love trail + Nairobi pin + generated envelope -->
   <section class="intro" id="intro" aria-label="Invitation opening animation">
     <div class="intro-bg" aria-hidden="true">
-      <!-- Soft “map” accent (stylized, low-opacity) -->
-      <svg class="map" viewBox="0 0 1200 700" role="img" aria-label="World map accent">
+      <!-- soft world-map accent (stylized) -->
+      <svg class="map" viewBox="0 0 1200 700">
         <defs>
           <linearGradient id="mapGrad" x1="0" x2="1">
             <stop offset="0" stop-color="#EDE6DE" stop-opacity="0.95"/>
             <stop offset="1" stop-color="#E6DDD2" stop-opacity="0.95"/>
           </linearGradient>
           <filter id="softBlur" x="-10%" y="-10%" width="120%" height="120%">
-            <feGaussianBlur stdDeviation="0.5" />
+            <feGaussianBlur stdDeviation="0.8" />
           </filter>
         </defs>
-
-        <!-- Abstract continents (premium backdrop vibe, not literal) -->
-        <g opacity="0.35" filter="url(#softBlur)" fill="url(#mapGrad)">
+        <g opacity="0.33" filter="url(#softBlur)" fill="url(#mapGrad)">
           <path d="M130,260 C180,170 290,150 360,205 C420,250 470,220 520,245 C580,275 560,350 500,375 C430,405 355,415 300,385 C235,345 165,330 130,260 Z"/>
           <path d="M610,205 C680,150 770,150 830,210 C875,255 960,250 1010,300 C1060,355 1015,430 940,430 C860,430 815,395 760,360 C705,325 640,305 610,265 C585,235 590,220 610,205 Z"/>
           <path d="M680,380 C725,330 790,340 820,390 C845,435 820,505 760,515 C705,525 665,485 655,445 C648,420 660,400 680,380 Z"/>
@@ -45,41 +43,41 @@
         <span class="pin-label">Nairobi</span>
       </div>
 
-      <!-- Flight SVG: trail draws + plane moves -->
-      <svg class="flight" id="flightSvg" viewBox="0 0 1200 700" aria-hidden="true">
+      <!-- Flight path + plane -->
+      <svg class="flight" viewBox="0 0 1200 700" aria-hidden="true">
         <defs>
           <linearGradient id="trailGrad" x1="0" x2="1">
-            <stop offset="0" stop-color="#C8A24A" stop-opacity="0.25"/>
+            <stop offset="0" stop-color="#C8A24A" stop-opacity="0.22"/>
             <stop offset="0.45" stop-color="#6B1F3A" stop-opacity="0.85"/>
-            <stop offset="1" stop-color="#C8A24A" stop-opacity="0.35"/>
+            <stop offset="1" stop-color="#C8A24A" stop-opacity="0.30"/>
           </linearGradient>
           <filter id="glow">
-            <feGaussianBlur stdDeviation="2.2" result="blur"/>
+            <feGaussianBlur stdDeviation="2.2" result="b"/>
             <feMerge>
-              <feMergeNode in="blur"/>
+              <feMergeNode in="b"/>
               <feMergeNode in="SourceGraphic"/>
             </feMerge>
           </filter>
         </defs>
 
-        <!-- The path includes a “Love-ish” flourish loop + continues to Nairobi -->
+        <!-- “Love” flourish + travel continuation -->
         <path id="flightPath"
-              d="M120,420
-                 C220,290 320,260 420,305
-                 C490,337 520,385 505,430
-                 C490,480 420,490 395,450
-                 C370,412 420,390 455,412
-                 C520,455 585,455 625,420
-                 C690,365 720,290 660,255
-                 C590,215 520,245 520,300
-                 C520,360 585,380 620,350
-                 C660,320 650,280 610,275
-                 C575,270 565,310 590,330
-                 C655,380 775,370 860,335
-                 C940,305 1005,320 1075,355
-                 C1120,380 1125,420 1100,450
-                 C1070,485 1020,475 980,460
-                 C920,435 900,410 855,405
+              d="M110,420
+                 C220,300 330,260 420,310
+                 C500,355 520,420 475,455
+                 C430,488 385,460 395,420
+                 C405,382 470,382 510,420
+                 C560,470 650,465 710,420
+                 C780,365 780,295 720,255
+                 C640,210 555,250 560,315
+                 C565,385 650,390 675,350
+                 C700,312 672,275 635,280
+                 C605,285 595,320 615,340
+                 C685,410 810,390 895,345
+                 C980,300 1050,320 1100,360
+                 C1140,390 1140,430 1110,460
+                 C1075,495 1015,485 970,465
+                 C915,442 900,410 855,405
                  C820,402 795,410 770,430
                  C740,455 735,480 745,510"
               fill="none"
@@ -87,114 +85,56 @@
               stroke-width="3.25"
               stroke-linecap="round"
               stroke-linejoin="round"
-              filter="url(#glow)"
-              pathLength="1"/>
-        <!-- trail “shine” overlay -->
+              filter="url(#glow)"/>
+
         <path id="flightShine"
-              d="M120,420
-                 C220,290 320,260 420,305
-                 C490,337 520,385 505,430
-                 C490,480 420,490 395,450
-                 C370,412 420,390 455,412
-                 C520,455 585,455 625,420
-                 C690,365 720,290 660,255
-                 C590,215 520,245 520,300
-                 C520,360 585,380 620,350
-                 C660,320 650,280 610,275
-                 C575,270 565,310 590,330
-                 C655,380 775,370 860,335
-                 C940,305 1005,320 1075,355
-                 C1120,380 1125,420 1100,450
-                 C1070,485 1020,475 980,460
-                 C920,435 900,410 855,405
+              d="M110,420
+                 C220,300 330,260 420,310
+                 C500,355 520,420 475,455
+                 C430,488 385,460 395,420
+                 C405,382 470,382 510,420
+                 C560,470 650,465 710,420
+                 C780,365 780,295 720,255
+                 C640,210 555,250 560,315
+                 C565,385 650,390 675,350
+                 C700,312 672,275 635,280
+                 C605,285 595,320 615,340
+                 C685,410 810,390 895,345
+                 C980,300 1050,320 1100,360
+                 C1140,390 1140,430 1110,460
+                 C1075,495 1015,485 970,465
+                 C915,442 900,410 855,405
                  C820,402 795,410 770,430
                  C740,455 735,480 745,510"
               fill="none"
-              stroke="rgba(255,255,255,0.65)"
+              stroke="rgba(255,255,255,0.60)"
               stroke-width="1.1"
               stroke-linecap="round"
               stroke-linejoin="round"
-              opacity="0.0"/>
+              opacity="0"/>
 
-        <!-- Plane -->
         <g id="plane" class="plane">
-          <svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true">
-            <path fill="#6B1F3A" d="M21.5 15.5c.6.2 1.1-.4.9-1l-1.8-5.4c-.1-.3-.3-.5-.6-.6L6 3.1c-.7-.2-1.3.4-1.1 1.1l2 6.1 6 1.8-6 1.8-2 6.1c-.2.7.4 1.3 1.1 1.1l14-5.4c.3-.1.5-.3.6-.6l1.8-5.4c.2-.6-.3-1.2-.9-1z"/>
-          </svg>
+          <path d="M21.5 15.5c.6.2 1.1-.4.9-1l-1.8-5.4c-.1-.3-.3-.5-.6-.6L6 3.1c-.7-.2-1.3.4-1.1 1.1l2 6.1 6 1.8-6 1.8-2 6.1c-.2.7.4 1.3 1.1 1.1l14-5.4c.3-.1.5-.3.6-.6l1.8-5.4c.2-.6-.3-1.2-.9-1z"
+                fill="#6B1F3A"/>
         </g>
       </svg>
 
       <button class="skip" id="skipIntro" type="button">Skip</button>
     </div>
 
-    <!-- Envelope stage -->
-    <div class="envelope-stage" aria-hidden="false">
-      <div class="envelope-wrap" id="envelopeWrap" aria-label="Envelope opening">
-        <div class="envelope" id="envelope">
-          <!-- base (your uploaded envelope image) -->
-          <div class="env-base" aria-hidden="true"></div>
+    <!-- Generated envelope -->
+    <div class="envelope-stage">
+      <div class="envelope-wrap" id="envWrap">
+        <div class="env" id="env" aria-label="Envelope opening">
+          <div class="env-shadow" aria-hidden="true"></div>
 
-          <!-- flap (cropped from same image) -->
-          <div class="env-flap" aria-hidden="true">
-            <div class="seal" aria-hidden="true">
-              <!-- Gold seal (SVG) with initials + plane + heart -->
-              <svg viewBox="0 0 200 200" class="seal-svg" role="img" aria-label="Seal with initials, plane, heart">
-                <defs>
-                  <radialGradient id="gold" cx="35%" cy="30%">
-                    <stop offset="0" stop-color="#FFE7A6"/>
-                    <stop offset="0.45" stop-color="#C8A24A"/>
-                    <stop offset="1" stop-color="#8A6B23"/>
-                  </radialGradient>
-                  <filter id="emboss">
-                    <feGaussianBlur in="SourceAlpha" stdDeviation="1.1" result="blur"/>
-                    <feSpecularLighting in="blur" surfaceScale="2" specularConstant="0.35" specularExponent="20" lighting-color="#ffffff" result="spec">
-                      <fePointLight x="-200" y="-200" z="300"/>
-                    </feSpecularLighting>
-                    <feComposite in="spec" in2="SourceAlpha" operator="in" result="spec2"/>
-                    <feMerge>
-                      <feMergeNode in="SourceGraphic"/>
-                      <feMergeNode in="spec2"/>
-                    </feMerge>
-                  </filter>
-                </defs>
-
-                <path d="M100 10
-                         C118 20 132 16 145 28
-                         C158 40 175 45 182 63
-                         C189 81 195 95 188 113
-                         C181 131 186 147 172 160
-                         C158 173 148 186 129 190
-                         C110 194 96 199 78 192
-                         C60 185 45 188 32 174
-                         C19 160 8 150 10 130
-                         C12 110 4 96 14 78
-                         C24 60 29 44 47 33
-                         C65 22 82 0 100 10Z"
-                      fill="url(#gold)" filter="url(#emboss)"/>
-
-                <circle cx="100" cy="100" r="72" fill="rgba(255,255,255,0.10)" stroke="rgba(255,255,255,0.25)" stroke-width="2"/>
-                <path d="M60 140 L140 60" stroke="rgba(74,16,40,0.35)" stroke-width="3" stroke-linecap="round"/>
-                <path d="M60 60 L140 140" stroke="rgba(74,16,40,0.35)" stroke-width="3" stroke-linecap="round"/>
-
-                <!-- plane icon -->
-                <path d="M100 38 l10 16 -10 4 -10-4 10-16z" fill="rgba(74,16,40,0.45)"/>
-                <!-- initials -->
-                <text x="62" y="112" font-family="Cormorant Garamond, serif" font-size="44" fill="rgba(74,16,40,0.65)" font-weight="600">J</text>
-                <text x="122" y="112" font-family="Cormorant Garamond, serif" font-size="44" fill="rgba(74,16,40,0.65)" font-weight="600">O</text>
-                <!-- heart -->
-                <path d="M100 150
-                         C92 140 78 138 74 150
-                         C70 162 82 170 100 182
-                         C118 170 130 162 126 150
-                         C122 138 108 140 100 150Z"
-                      fill="rgba(74,16,40,0.45)"/>
-                <!-- subtle glint -->
-                <path d="M55 68 C75 45 120 38 145 55" stroke="rgba(255,255,255,0.55)" stroke-width="6" stroke-linecap="round" opacity="0.25"/>
-              </svg>
-            </div>
+          <div class="env-back" aria-hidden="true"></div>
+          <div class="env-sides" aria-hidden="true">
+            <span class="side side-l"></span>
+            <span class="side side-r"></span>
+            <span class="side side-b"></span>
           </div>
 
-          <!-- letter -->
           <div class="letter" id="letter" aria-hidden="true">
             <div class="letter-inner">
               <p class="letter-kicker">You are invited</p>
@@ -205,6 +145,66 @@
               <p class="letter-address">Sovereign Suites and Spa, Nairobi, Kenya, Redhill, Limuru Road, Limuru, Kenya, 00100</p>
             </div>
           </div>
+
+          <!-- flap -->
+          <div class="env-flap" aria-hidden="true"></div>
+
+          <!-- seal (generated) -->
+          <div class="seal" aria-hidden="true">
+            <svg viewBox="0 0 200 200" class="seal-svg" role="img" aria-label="Gold seal with initials, plane and heart">
+              <defs>
+                <radialGradient id="gold" cx="35%" cy="30%">
+                  <stop offset="0" stop-color="#FFE7A6"/>
+                  <stop offset="0.5" stop-color="#C8A24A"/>
+                  <stop offset="1" stop-color="#8A6B23"/>
+                </radialGradient>
+                <filter id="emboss">
+                  <feGaussianBlur in="SourceAlpha" stdDeviation="1.1" result="blur"/>
+                  <feSpecularLighting in="blur" surfaceScale="2" specularConstant="0.35" specularExponent="22" lighting-color="#ffffff" result="spec">
+                    <fePointLight x="-200" y="-200" z="300"/>
+                  </feSpecularLighting>
+                  <feComposite in="spec" in2="SourceAlpha" operator="in" result="spec2"/>
+                  <feMerge>
+                    <feMergeNode in="SourceGraphic"/>
+                    <feMergeNode in="spec2"/>
+                  </feMerge>
+                </filter>
+              </defs>
+
+              <path d="M100 10
+                       C118 20 132 16 145 28
+                       C158 40 175 45 182 63
+                       C189 81 195 95 188 113
+                       C181 131 186 147 172 160
+                       C158 173 148 186 129 190
+                       C110 194 96 199 78 192
+                       C60 185 45 188 32 174
+                       C19 160 8 150 10 130
+                       C12 110 4 96 14 78
+                       C24 60 29 44 47 33
+                       C65 22 82 0 100 10Z"
+                    fill="url(#gold)" filter="url(#emboss)"/>
+
+              <circle cx="100" cy="100" r="72" fill="rgba(255,255,255,0.10)" stroke="rgba(255,255,255,0.25)" stroke-width="2"/>
+              <path d="M60 140 L140 60" stroke="rgba(74,16,40,0.35)" stroke-width="3" stroke-linecap="round"/>
+              <path d="M60 60 L140 140" stroke="rgba(74,16,40,0.35)" stroke-width="3" stroke-linecap="round"/>
+
+              <!-- plane icon -->
+              <path d="M100 38 l10 16 -10 4 -10-4 10-16z" fill="rgba(74,16,40,0.45)"/>
+              <!-- initials -->
+              <text x="62" y="112" font-family="Cormorant Garamond, serif" font-size="44" fill="rgba(74,16,40,0.65)" font-weight="600">J</text>
+              <text x="122" y="112" font-family="Cormorant Garamond, serif" font-size="44" fill="rgba(74,16,40,0.65)" font-weight="600">O</text>
+              <!-- heart -->
+              <path d="M100 150
+                       C92 140 78 138 74 150
+                       C70 162 82 170 100 182
+                       C118 170 130 162 126 150
+                       C122 138 108 140 100 150Z"
+                    fill="rgba(74,16,40,0.45)"/>
+              <!-- glint -->
+              <path d="M55 68 C75 45 120 38 145 55" stroke="rgba(255,255,255,0.55)" stroke-width="6" stroke-linecap="round" opacity="0.25"/>
+            </svg>
+          </div>
         </div>
 
         <p class="open-caption" id="openCaption">Opening your invitation…</p>
@@ -212,7 +212,7 @@
     </div>
   </section>
 
-  <!-- MAIN INVITATION -->
+  <!-- MAIN PAGE -->
   <header class="topbar" id="topbar" aria-hidden="true">
     <div class="topbar-inner">
       <div class="brand">Jeniffer <span>×</span> Okhifo</div>
@@ -220,14 +220,39 @@
     </div>
   </header>
 
-  <main class="page" id="page" aria-label="Wedding invitation content" aria-hidden="true">
+  <main class="page" id="page" aria-hidden="true">
+    <!-- Floral accents (generated SVG line art) -->
+    <div class="floral floral-tl" data-parallax="0.18" aria-hidden="true">
+      <svg viewBox="0 0 260 260">
+        <path d="M210 40 C160 70 150 120 168 160 C188 205 170 235 135 245"
+              fill="none" stroke="rgba(107,31,58,.22)" stroke-width="2" stroke-linecap="round"/>
+        <path d="M208 40 C188 62 160 72 136 70" fill="none" stroke="rgba(200,162,74,.25)" stroke-width="2" stroke-linecap="round"/>
+        <path d="M165 85 C180 80 195 88 198 104 C201 120 188 132 172 130 C154 128 148 108 165 85Z"
+              fill="rgba(200,162,74,.10)" stroke="rgba(107,31,58,.18)" stroke-width="2"/>
+        <path d="M120 110 C105 95 85 92 72 104 C58 118 68 142 88 146 C106 150 120 135 120 110Z"
+              fill="rgba(107,31,58,.06)" stroke="rgba(107,31,58,.16)" stroke-width="2"/>
+      </svg>
+    </div>
+
+    <div class="floral floral-br" data-parallax="0.22" aria-hidden="true">
+      <svg viewBox="0 0 260 260">
+        <path d="M50 220 C95 190 112 150 106 110 C98 60 130 40 165 35"
+              fill="none" stroke="rgba(107,31,58,.20)" stroke-width="2" stroke-linecap="round"/>
+        <path d="M70 190 C80 170 95 155 115 145" fill="none" stroke="rgba(200,162,74,.24)" stroke-width="2" stroke-linecap="round"/>
+        <path d="M120 120 C108 105 110 85 126 78 C144 70 160 84 158 102 C156 120 136 130 120 120Z"
+              fill="rgba(200,162,74,.10)" stroke="rgba(107,31,58,.18)" stroke-width="2"/>
+        <path d="M92 160 C75 150 70 130 82 118 C96 104 118 112 120 132 C122 152 108 166 92 160Z"
+              fill="rgba(107,31,58,.06)" stroke="rgba(107,31,58,.16)" stroke-width="2"/>
+      </svg>
+    </div>
+
     <section class="hero reveal">
       <div class="hero-inner">
         <p class="eyebrow">Save the Date</p>
         <h1>Jeniffer <span class="amp">&</span> Okhifo</h1>
         <p class="hero-sub">16th May, 2026 • Nairobi, Kenya</p>
 
-        <div class="countdown2" aria-label="Countdown to the wedding">
+        <div class="countdown2" aria-label="Countdown">
           <div class="cd2"><span id="cdD">—</span><small>Days</small></div>
           <div class="cd2"><span id="cdH">—</span><small>Hours</small></div>
           <div class="cd2"><span id="cdM">—</span><small>Mins</small></div>
@@ -266,9 +291,9 @@
           </a>
         </div>
 
-        <div class="map-frame" aria-label="Map">
+        <div class="map-frame">
           <iframe
-            title="Muthu Sovereign Suites & Spa Map"
+            title="Map — Muthu Sovereign Suites & Spa"
             loading="lazy"
             referrerpolicy="no-referrer-when-downgrade"
             src="https://www.google.com/maps?q=Sovereign%20Suites%20and%20Spa%2C%20Nairobi%2C%20Kenya%2C%20Redhill%2C%20Limuru%20Road%2C%20Limuru%2C%20Kenya%2C%2000100&output=embed">
@@ -282,7 +307,7 @@
         <h2>Where We’ll Celebrate</h2>
         <p class="muted">A serene, luxurious escape—lush gardens, classic elegance, and a warm Kenyan welcome.</p>
 
-        <figure class="photo-card">
+        <figure class="photo-card" data-parallax="0.10">
           <img src="assets/hotel.webp" alt="Muthu Sovereign Suites & Spa exterior" loading="lazy" decoding="async">
           <figcaption class="photo-cap">Muthu Sovereign Suites &amp; Spa • Nairobi, Kenya</figcaption>
         </figure>
