@@ -1,6 +1,5 @@
 {
-  "$schema": "./node_modules/wrangler/config-schema.json",
-  "name": "wedding-theatre",
+  "name": "jeniffer-okhifo-invite",
   "main": "src/index.js",
   "compatibility_date": "2026-02-23",
   "assets": {
